@@ -26,7 +26,7 @@ const formData = reactive({
                 <legend class="fieldset-legend">Name</legend>
                 <input v-model="formData.name" type="text" class="input" placeholder="ex: John Doe" />
                 <span 
-                    class="text-xs text-red-500"
+                    class="text-sm text-red-500"
                     v-if="errors.name"
                 >
                     {{ errors.name[0] }}
@@ -37,7 +37,7 @@ const formData = reactive({
                 <legend class="fieldset-legend">Email</legend>
                 <input v-model="formData.email" type="email" class="input" placeholder="ex: johndoe@gmail.com" />
                 <span 
-                    class="text-xs text-red-500"
+                    class="text-sm text-red-500"
                     v-if="errors.email"
                 >
                     {{ errors.email[0] }}
@@ -48,7 +48,7 @@ const formData = reactive({
                 <legend class="fieldset-legend">Password</legend>
                 <input v-model="formData.password" type="password" class="input" placeholder="Password" />
                 <span 
-                    class="text-xs text-red-500"
+                    class="text-sm text-red-500"
                     v-if="errors.password"
                 >
                     {{ errors.password[0] }}
