@@ -50,6 +50,25 @@ export const useAuthStore = defineStore('authStore', {
             } catch (error) {
                 this.errors = error.response.data.errors;
             }
+        }, 
+
+        async logout() {
+            try {
+                if (localStorage.getItem("token")) {
+                    await axios.delete('http://127.0.0.1:8000/api/logout', {
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+
+                    this.errors = {};
+                    localStorage.removeItem("token");
+                    this.user = null;
+                    this.router.push({ name: 'auth.login'});
+                }
+            } catch (error) {
+                this.errors = error.response.data.errors;
+            }
         }
     }
 });
