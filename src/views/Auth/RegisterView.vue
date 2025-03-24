@@ -19,7 +19,7 @@ onMounted(() => { errors.value = {} })
 <template>
     <div class="pt-10 flex justify-center w-3xl">
         <form 
-            @submit.prevent="authStore.authenticate('register', formData)"
+            @submit.prevent="authStore.register(formData)"
             class="flex flex-col items-center space-y-4 w-full"
         >
             <h1 class="font-bold text-2xl">Sign up</h1>

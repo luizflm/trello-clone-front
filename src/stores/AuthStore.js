@@ -27,9 +27,9 @@ export const useAuthStore = defineStore('authStore', {
             }
         },
         
-        async authenticate(route, formData) {
+        async register(formData) {
             try {
-                const response = await axios.post(`http://127.0.0.1:8000/api/${route}`, formData);
+                const response = await axios.post('http://127.0.0.1:8000/api/register', formData);
 
                 this.errors = {};
                 localStorage.setItem("token", response.data.token);
