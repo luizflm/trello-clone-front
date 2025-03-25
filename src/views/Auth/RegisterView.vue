@@ -14,15 +14,37 @@ const { errors } = storeToRefs(authStore)
 const formData = reactive({
     name: '',
     email: '',
+    avatar: '',
     password: '',
     password_confirmation: ''
 });
 
 onMounted(() => { errors.value = {} })
+
+function handleAvatarUpload(event) {
+    if (event.target.files && event.target.files[0]) {
+        formData.avatar = event.target.files[0];
+    }
+}
+
+function handleSubmit() {
+    const data = new FormData();
+
+    data.append('name', formData.name);
+    data.append('email', formData.email);
+    data.append('password', formData.password);
+    data.append('password_confirmation', formData.password_confirmation);
+
+    if (formData.avatar) {
+        data.append('avatar', formData.avatar);
+    }
+
+    authStore.register(data);
+}
 </script>
 
 <template>
-    <FormContainer @submit-form="authStore.register(formData)">
+    <FormContainer @submit-form="handleSubmit">
         <FormTitle title="Sign up" />
 
         <TextInput 
@@ -34,6 +56,11 @@ onMounted(() => { errors.value = {} })
         >
             <InputError v-if="errors.name" :description="errors.name[0]"/>
         </TextInput>
+
+        <fieldset class="fieldset w-64">
+            <legend class="fieldset-legend">Profile Photo</legend>
+            <input class="file-input" type="file" accept=".png,.jpg,.jpeg" @change="handleAvatarUpload"/>
+        </fieldset>
 
         <TextInput 
             :modelValue="formData.email"

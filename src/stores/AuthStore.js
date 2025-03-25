@@ -5,6 +5,7 @@ export const useAuthStore = defineStore('authStore', {
     state: () => {
         return {
             user: null,
+            userAvatar: null,
             errors: {}
         }
     },
@@ -26,6 +27,22 @@ export const useAuthStore = defineStore('authStore', {
                 }
             }
         },
+
+        async getUserAvatar() {
+            if (localStorage.getItem("token")) {
+                try {
+                    const response = await axios.get("http://127.0.0.1:8000/api/avatar", {
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+
+                    this.userAvatar = response.data;
+                } catch (error) {
+                    this.errors = error.response.data.errors;
+                }
+            }
+        },
         
         async register(formData) {
             try {
@@ -34,6 +51,7 @@ export const useAuthStore = defineStore('authStore', {
                 this.errors = {};
                 localStorage.setItem("token", response.data.token);
                 this.user = response.data.user;
+                await this.getUserAvatar();
                 this.router.push({ name: 'home'});
             } catch (error) {
                 this.errors = error.response.data.errors;
@@ -46,6 +64,7 @@ export const useAuthStore = defineStore('authStore', {
 
                 this.errors = {};
                 localStorage.setItem("token", response.data.token);
+                await this.getUserAvatar();
                 this.router.push({ name: 'home'});
             } catch (error) {
                 this.errors = error.response.data.errors;
@@ -64,6 +83,7 @@ export const useAuthStore = defineStore('authStore', {
                     this.errors = {};
                     localStorage.removeItem("token");
                     this.user = null;
+                    this.userAvatar = null;
                     this.router.push({ name: 'auth.login'});
                 }
             } catch (error) {

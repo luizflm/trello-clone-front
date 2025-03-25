@@ -1,8 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './stores/AuthStore';
+import { onMounted } from 'vue';
 
 const authStore = useAuthStore();
+onMounted(async () => {
+  await authStore.getUserAvatar();
+})
 </script>
 
 <template>
@@ -15,8 +19,8 @@ const authStore = useAuthStore();
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            alt="User avatar"
+            :src="authStore.userAvatar" />
         </div>
       </div>
       <ul
