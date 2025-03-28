@@ -26,6 +26,7 @@ onMounted(async () => {
       <ul
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        <li><RouterLink :to="{ name: 'profile.edit' }">Edit Profile</RouterLink></li>
         <li><a @click="authStore.logout()">Logout</a></li>
       </ul>
     </div>

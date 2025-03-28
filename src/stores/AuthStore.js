@@ -1,3 +1,4 @@
+import { useFlash } from "@/composables/useFlash";
 import axios from "axios";
 import { defineStore } from "pinia"
 
@@ -85,6 +86,29 @@ export const useAuthStore = defineStore('authStore', {
                     this.user = null;
                     this.userAvatar = null;
                     this.router.push({ name: 'auth.login'});
+                }
+            } catch (error) {
+                this.errors = error.response.data.errors;
+            }
+        },
+
+        async updateProfile(formData) {
+            try {
+                if (localStorage.getItem('token')) {
+                    const response = await axios.post(`http://127.0.0.1:8000/api/users/${this.user.id}`, formData, {
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+    
+                    this.errors = {};
+                    this.user = response.data.user;
+                    await this.getUserAvatar();
+
+                    const { flash } = useFlash();
+                    flash('Success', 'Your profile has been updated successfully', 'success');
+                    
+                    this.router.push({ name: 'profile.edit'});
                 }
             } catch (error) {
                 this.errors = error.response.data.errors;
