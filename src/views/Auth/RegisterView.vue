@@ -60,6 +60,7 @@ function handleSubmit() {
         <fieldset class="fieldset w-64">
             <legend class="fieldset-legend">Profile Photo</legend>
             <input class="file-input" type="file" accept=".png,.jpg,.jpeg" @change="handleAvatarUpload"/>
+            <InputError v-if="errors.avatar" :description="errors.avatar[0]"/>
         </fieldset>
 
         <TextInput 
