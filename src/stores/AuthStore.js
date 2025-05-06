@@ -53,7 +53,7 @@ export const useAuthStore = defineStore('authStore', {
                 localStorage.setItem("token", response.data.token);
                 this.user = response.data.user;
                 await this.getUserAvatar();
-                this.router.push({ name: 'home'});
+                this.router.push({ name: 'boards.index'});
             } catch (error) {
                 this.errors = error.response.data.errors;
             }
@@ -66,7 +66,7 @@ export const useAuthStore = defineStore('authStore', {
                 this.errors = {};
                 localStorage.setItem("token", response.data.token);
                 await this.getUserAvatar();
-                this.router.push({ name: 'home'});
+                this.router.push({ name: 'boards.index'});
             } catch (error) {
                 this.errors = error.response.data.errors;
             }

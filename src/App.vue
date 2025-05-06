@@ -10,9 +10,27 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="navbar px-10 bg-primary text-white">
-    <div class="flex-1">
-      <RouterLink :to="{ name: 'home' }" class="font-bold text-xl">Trello</RouterLink>
+  <div class="navbar justify-between px-10 bg-primary text-white">
+    <div>
+      <RouterLink :to="{ name: 'boards.index' }" class="font-bold text-xl">Trello</RouterLink>
+    </div>
+
+    <div v-if="authStore.user" class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li>
+          <details>
+            <summary>Boards</summary>
+            <ul class="w-48 font-medium text-black text-sm p-2">
+              <li>
+                <RouterLink :to="{ name: 'boards.create' }">Create a new Board</RouterLink>
+              </li>
+              <li>
+                <RouterLink :to="{ name: 'boards.index' }" class="font-medium text-sm">My Boards</RouterLink>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ul>
     </div>
 
     <div v-if="authStore.user" class="dropdown dropdown-end text-black">
@@ -31,9 +49,9 @@ onMounted(async () => {
       </ul>
     </div>
 
-    <div v-else>
-      <RouterLink :to="{ name: 'auth.register' }" class="btn btn-ghost text-md">Sign up</RouterLink>
+    <div v-else class="space-x-2">
       <RouterLink :to="{ name: 'auth.login' }" class="btn btn-ghost text-md">Sign in</RouterLink>
+      <RouterLink :to="{ name: 'auth.register' }" class="btn btn-soft btn-primary text-md">Sign up</RouterLink>        
     </div>
   </div>
 
